@@ -52,9 +52,8 @@ func TokenMiddleware(psk []byte, public map[string]string, h http.Handler) http.
 			log.Infof("Authenticating token for protected URL '%s'", r.URL)
 
 			htoken := r.Header.Get("X-Auth-Token")
-			if err := bcrypt.CompareHashAndPassword(psk, []byte(htoken)); err != nil {
-				log.Warnf("Unable to authenticate session for url: '%s', with error: '%s'", r.URL, err)
-				log.Debugf("Unable to authenticate session for url: '%s', with error: '%s', with user input: '%s'", r.URL, err, htoken)
+			if err := bcrypt.CompareHashAndPassword([]byte(htoken), psk); err != nil {
+				log.Warnf("Unable to authenticate session for URL '%s' with error '%s'", r.URL, err)
 				w.WriteHeader(http.StatusForbidden)
 				return
 			}

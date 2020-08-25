@@ -2,6 +2,9 @@
 
 This is a templated version of a Spinup REST API.  The easiest way to  process this template is with the [splat](https://github.com/YaleSpinup/splat) command line utility.
 
+
+Use hashed password (bcrypt) via client header.  Store a plaintext uuid in config/config.json for the API.
+
 ## License
 
 GNU Affero General Public License v3.0 (GNU AGPLv3)  

@@ -47,7 +47,6 @@ type apiVersion struct {
 
 type server struct {
 	router  *mux.Router
-	version common.Version
 	context context.Context
 	version *apiVersion
 	org string
@@ -66,15 +65,13 @@ func NewServer(config common.Config) error {
 	s := server{
 		// ec2Services:         make(map[string]ec2.EC2),
 		router:  mux.NewRouter(),
-		version: config.Version,
+		version: &apiVersion{
+			Version:    config.Version.Version,
+			GitHash:    config.Version.GitHash,
+			BuildStamp: config.Version.BuildStamp,
+		}
 		context: ctx,
 		org: config.Org,
-	}
-
-	s.version = &apiVersion{
-		Version:    s.version.Version,
-		GitHash:    s.version.GitHash,
-		BuildStamp: s.version.BuildStamp,
 	}
 
 	// Create shared sessions

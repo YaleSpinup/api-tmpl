@@ -21,6 +21,10 @@ func TestRollback(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		v = append(v, i)
 		f := func(ctx context.Context) error {
+			if len(v) == 0 {
+				return nil
+			}
+
 			value := v[len(v)-1]
 			index := len(v) - 1
 

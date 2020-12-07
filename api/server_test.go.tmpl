@@ -1,0 +1,48 @@
+package api
+
+import (
+	"context"
+	"errors"
+	"fmt"
+	"testing"
+)
+
+func TestRollback(t *testing.T) {
+	// nil input
+	var rbfuncs []rollbackFunc
+	rollBack(&rbfuncs)
+
+	// empty input
+	rbfuncs = []rollbackFunc{}
+	rollBack(&rbfuncs)
+
+	// test rolling back
+	v := []int{}
+	for i := 0; i < 10; i++ {
+		v = append(v, i)
+		f := func(ctx context.Context) error {
+			value := v[len(v)-1]
+			index := len(v) - 1
+
+			t.Logf("rolling back value %d with index %d", value, index)
+
+			if value != index {
+				t.Errorf("unexpected value %d for v index %d", value, index)
+				return fmt.Errorf("unexpected value %d for v index %d", value, index)
+			}
+
+			v = v[:len(v)-1]
+			return nil
+		}
+
+		rbfuncs = append(rbfuncs, f)
+	}
+	rollBack(&rbfuncs)
+
+	// return an error
+	f := func(ctx context.Context) error {
+		return errors.New("boom")
+	}
+	rbfuncs = append(rbfuncs, f)
+	rollBack(&rbfuncs)
+}

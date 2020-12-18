@@ -33,9 +33,6 @@ var (
 	// Version is the main version number
 	Version = "0.0.0"
 
-	// VersionPrerelease is a prerelease marker
-	VersionPrerelease = ""
-
 	// Buildstamp is the timestamp the binary was built, it should be set at buildtime with ldflags
 	Buildstamp = "No BuildStamp Provided"
 
@@ -71,7 +68,6 @@ func main() {
 
 	config.Version = common.Version{
 		Version:           Version,
-		VersionPrerelease: VersionPrerelease,
 		BuildStamp:        Buildstamp,
 		GitHash:           Githash,
 	}
@@ -100,6 +96,6 @@ func main() {
 }
 
 func vers() {
-	fmt.Printf("{{ .AppName }} Version: %s%s\n", Version, VersionPrerelease)
+	fmt.Printf("{{ .AppName }} Version: %s\n", Version)
 	os.Exit(0)
 }

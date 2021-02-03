@@ -53,7 +53,7 @@ func main() {
 	if err != nil {
 		log.Fatal("unable to get working directory")
 	}
-	log.Infof("Starting {{ .AppName }} version %s%s (%s)", Version, VersionPrerelease, cwd)
+	log.Infof("Starting {{ .AppName }} version %s (%s)", Version, cwd)
 
 	configFile, err := os.Open(*configFileName)
 	if err != nil {

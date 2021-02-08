@@ -4,11 +4,15 @@ build:
   local: {}
   artifacts:
   - image: hub.docker.com/yaleits/{{ .DockerName }}
-    docker:
-      dockerfile: k8s/Dockerfile
-      buildArgs:
-        version: 0.0.0
-        prerelease: dev
+    buildpacks:
+      # https://paketo.io/
+      # https://github.com/paketo-buildpacks/stacks
+      # the "tiny" builder is ideal for
+      # most Go apps, Java GraalVM Native Images
+      builder: paketobuildpacks/builder:tiny
+      # the "full" builder is ideal for
+      # PHP/Node.js/Python/Ruby/etc. apps with many native extensions
+      # builder: paketobuildpacks/builder:full
 deploy:
   helm:
     releases:

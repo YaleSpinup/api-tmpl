@@ -14,6 +14,9 @@ build:
       # PHP/Node.js/Python/Ruby/etc. apps with many native extensions
       # builder: paketobuildpacks/builder:full
 deploy:
+  kubectl:
+    manifests:
+      - k8s/k8s-*
   helm:
     releases:
     - name: {{ .AppName }}

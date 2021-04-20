@@ -62,7 +62,7 @@ func WithExternalID(extId string) SessionOption {
 
 func WithExternalRoleName(role string) SessionOption {
 	return func(s *Session) {
-		log.Debugf("setting region to %s", role)
+		log.Debugf("setting external role to %s", role)
 		s.RoleName = role
 	}
 }
